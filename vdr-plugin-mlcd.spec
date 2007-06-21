@@ -2,7 +2,7 @@
 %define plugin	mlcd
 %define name	vdr-plugin-%plugin
 %define version	0.0.4a
-%define rel	8
+%define rel	9
 
 Summary:	VDR plugin: Multitainer LCD-Display Driver
 Name:		%name
