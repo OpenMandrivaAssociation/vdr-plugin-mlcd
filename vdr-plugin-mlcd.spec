@@ -14,6 +14,7 @@ URL:		http://home.arcor.de/meinrad/
 Source:		http://home.arcor.de/meinrad/vdr-%plugin-%version.tar.bz2
 Patch1:		02_mlcd-0.0.4a-fontfile.dpatch
 Patch2:		http://deela.cc.fh-lippe.de/files/vdr-mlcd/mlcd-0.0.4a.patch
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	vdr-devel >= 1.4.1-6
 Requires:	vdr-abi = %vdr_abi
 
