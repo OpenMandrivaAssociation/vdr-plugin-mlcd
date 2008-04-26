@@ -2,7 +2,7 @@
 %define plugin	mlcd
 %define name	vdr-plugin-%plugin
 %define version	0.0.4a
-%define rel	12
+%define rel	13
 
 Summary:	VDR plugin: Multitainer LCD-Display Driver
 Name:		%name
@@ -13,9 +13,9 @@ License:	GPL
 URL:		http://home.arcor.de/meinrad/
 Source:		http://home.arcor.de/meinrad/vdr-%plugin-%version.tar.bz2
 Patch1:		02_mlcd-0.0.4a-fontfile.dpatch
-Patch2:		http://deela.cc.fh-lippe.de/files/vdr-mlcd/mlcd-0.0.4a.patch
+Patch2:		90_mlcd-0.0.4a-1.3.38.dpatch
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	vdr-devel >= 1.4.1-6
+BuildRequires:	vdr-devel >= 1.6.0
 Requires:	vdr-abi = %vdr_abi
 
 %description
@@ -24,7 +24,8 @@ Enables the build in display of Fujitsu-Siemens Multitainer device.
 %prep
 %setup -q -n %plugin-%version
 %patch1 -p1 -b .fontfile
-%patch2 -p4 -b .1338
+%patch2 -p1 -b .1338
+%vdr_plugin_prep
 
 %build
 %vdr_plugin_build
