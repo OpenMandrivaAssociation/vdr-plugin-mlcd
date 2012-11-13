@@ -1,0 +1,50 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_mlcd-0.0.4a-1.3.38.dpatch by Thomas Günther <tom@toms-cafe.de>
+## http://toms-cafe.de/vdr/download/mlcd-0.0.4a-1.3.38.diff
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Changes for VDR >= 1.3.38.
+
+@DPATCH@
+--- mlcd-0.0.4a/mlcd.c
++++ mlcd-0.0.4a/mlcd.c
+@@ -22,8 +22,13 @@
+   virtual void ChannelSwitch(const cDevice *Device, int ChannelNumber);
+   virtual void SetVolume(int Volume, bool Absolute);
+   //  virtual void OsdProgramme(time_t PresentTime, const char *PresentTitle, const char *PresentSubtitle, time_t FollowingTime, const char *FollowingTitle, const char *FollowingSubtitle);
++#if VDRVERSNUM >= 10338
++  virtual void Recording(const cDevice *Device, const char *Name, const char *FileName, bool On);
++  virtual void Replaying(const cControl *Control, const char *Name, const char *FileName, bool On);
++#else
+   virtual void Recording(const cDevice *Device, const char *Name);
+   virtual void Replaying(const cControl *Control, const char *Name);
++#endif
+   };
+ 
+ void clcdStatus::ChannelSwitch(const cDevice *Device, int ChannelNumber)
+@@ -58,6 +63,17 @@
+ }
+ */
+ 
++#if VDRVERSNUM >= 10338
++void clcdStatus::Recording(const cDevice *Device, const char *Name, const char *FileName, bool On)
++{
++  LCD->SetRecordingState(Device->CardIndex(), On ? Name ? Name : "" : NULL);
++}
++
++void clcdStatus::Replaying(const cControl *Control, const char *Name, const char *FileName, bool On)
++{
++  LCD->ReplayControl((cControl *) Control, On ? Name ? Name : "" : NULL);
++}
++#else
+ void clcdStatus::Recording(const cDevice *Device, const char *Name)
+ {
+   LCD->SetRecordingState(Device->CardIndex(), Name);
+@@ -68,6 +84,7 @@
+ 
+   LCD->ReplayControl((cControl *) Control,Name);
+ }
++#endif
+ 
+ class cPluginMlcd : public cPlugin {
+ private:

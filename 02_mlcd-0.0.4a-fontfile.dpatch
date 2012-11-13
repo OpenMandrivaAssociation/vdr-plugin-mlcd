@@ -1,0 +1,61 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_mlcd-0.0.4a-fontfile.dpatch by Thomas Günther <tom@toms-cafe.de>
+## http://toms-cafe.de/vdr/download/mlcd-0.0.4a-fontfile.diff
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Change path of fontfile char.dat to the plugins configuration directory,
+## DP: i.e. the directory plugins/mlcd/ inside the configuration directory of
+## DP: VDR (e.g. /video0/plugins/mlcd/char.dat).
+
+@DPATCH@
+--- mlcd-0.0.4a/multilcd.c
++++ mlcd-0.0.4a/multilcd.c
+@@ -10,6 +10,7 @@
+ #include "multilcd.h"
+ #include <vdr/tools.h>
+ #include <vdr/config.h>
++#include <vdr/plugin.h>
+ // #define M_DEBUG
+ 
+ 
+@@ -154,16 +155,18 @@
+   //Initialisierung des Arrays
+   int i;
+   int j;
++  char* path;
++  asprintf(&path, "%s/%s", cPlugin::ConfigDirectory("mlcd"), FONTFILE);
++
+ #ifdef M_DEBUG
+-  dsyslog(LOG_INFO,"Reading Font description from %s",FONTFILE);
++  dsyslog(LOG_INFO,"Reading Font description from %s", path);
+ #endif
+   for (i=0;i<256;i++)
+     {
+       for(j=0;j<6;j++) font[i][j] = 0;
+     }
+   //Oeffnen der Fontdatei
+-  const char *name;
+-  FILE *f=fopen(name=FONTFILE,"r");
++  FILE *f=fopen(path, "r");
+  if(f){
+    int n, i;
+    char buffer[128];
+@@ -181,6 +184,7 @@
+  fclose(f);
+  }
+ 
++ free(path);
+  return 0;
+ }
+ 
+--- mlcd-0.0.4a/multilcd.h
++++ mlcd-0.0.4a/multilcd.h
+@@ -13,7 +13,7 @@
+ #define TEXT 0xb3
+ #define GRAPH 0xb4
+ 
+-#define FONTFILE "/etc/char.dat"
++#define FONTFILE "char.dat"
+ 
+ class mLCD : public cThread {
+  private:
