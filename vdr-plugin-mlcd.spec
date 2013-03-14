@@ -2,7 +2,7 @@
 %define plugin	mlcd
 %define name	vdr-plugin-%plugin
 %define version	0.0.4a
-%define rel	17
+%define rel	18
 
 Summary:	VDR plugin: Multitainer LCD-Display Driver
 Name:		%name
@@ -34,12 +34,6 @@ Enables the build in display of Fujitsu-Siemens Multitainer device.
 
 install -d -m755 %{buildroot}%{vdr_plugin_cfgdir}/%plugin
 install -m644 char.dat %{buildroot}%{vdr_plugin_cfgdir}/%plugin
-
-%post
-%vdr_plugin_post %plugin
-
-%postun
-%vdr_plugin_postun %plugin
 
 %files -f %plugin.vdr
 %defattr(-,root,root)
