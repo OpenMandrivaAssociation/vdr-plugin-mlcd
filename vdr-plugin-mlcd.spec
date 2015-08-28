@@ -3,7 +3,7 @@
 Summary:	VDR plugin: Multitainer LCD-Display Driver
 Name:		vdr-plugin-%plugin
 Version:	0.0.4a
-Release:	19
+Release:	20
 Group:		Video
 License:	GPL
 URL:		http://home.arcor.de/meinrad/
