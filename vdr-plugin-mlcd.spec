@@ -6,7 +6,7 @@ Version:	0.0.4a
 Release:	20
 Group:		Video
 License:	GPL
-URL:		http://home.arcor.de/meinrad/
+URL:		https://home.arcor.de/meinrad/
 Source:		http://home.arcor.de/meinrad/vdr-%plugin-%{version}.tar.bz2
 Patch1:		02_mlcd-0.0.4a-fontfile.dpatch
 Patch2:		90_mlcd-0.0.4a-1.3.38.dpatch
